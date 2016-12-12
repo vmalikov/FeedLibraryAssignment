@@ -3,6 +3,7 @@ package com.feedlibraryassignment;
 import android.app.Activity;
 import android.content.Context;
 
+import com.feeddatakit.FeedDataKitManager;
 import com.feedlibraryassignment.logic.FeedManagerImpl;
 
 /**
@@ -11,7 +12,7 @@ import com.feedlibraryassignment.logic.FeedManagerImpl;
 
 public interface ILifecycleListener {
     void onCreate(Activity activity);
-    void onResume(Activity activity);
+    void onResume(Activity activity, FeedDataKitManager.FeedPostsCallback callback);
     void onPause(Context applicationContext);
     void onDestroy(Activity activity);
 

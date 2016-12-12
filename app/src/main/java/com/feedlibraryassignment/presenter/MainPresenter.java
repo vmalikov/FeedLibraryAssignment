@@ -21,12 +21,10 @@ import pl.tajchert.nammu.PermissionCallback;
 
 public class MainPresenter implements ILifecycleListener {
 
-    private final FeedDataKitManager.FeedPostsCallback feedPostsCallback;
     private FeedManagerImpl.OnNewPostListener onNewPostListener;
 
-    public MainPresenter(FeedManagerImpl.OnNewPostListener onNewPostListener, FeedDataKitManager.FeedPostsCallback feedPostsCallback) {
+    public MainPresenter(FeedManagerImpl.OnNewPostListener onNewPostListener) {
         this.onNewPostListener = onNewPostListener;
-        this.feedPostsCallback = feedPostsCallback;
     }
 
     @Override
@@ -36,8 +34,8 @@ public class MainPresenter implements ILifecycleListener {
     }
 
     @Override
-    public void onResume(Activity activity) {
-        checkPermissionsAndFetchData(activity);
+    public void onResume(Activity activity, FeedDataKitManager.FeedPostsCallback callback) {
+        checkPermissionsAndFetchData(activity, callback);
 
         UpdateReceiver.getInstance().setOnConnectionChangedListener(isConnected -> {
             FeedManagerImpl.getInstance(activity.getApplicationContext()).shouldContinuePeriodicTask(isConnected);
@@ -68,15 +66,15 @@ public class MainPresenter implements ILifecycleListener {
     }
 
     // Permissions section
-    private void checkPermissionsAndFetchData(Activity activity) {
+    private void checkPermissionsAndFetchData(Activity activity, FeedDataKitManager.FeedPostsCallback callback) {
         if (Nammu.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            startFetchingData(activity);
+            startFetchingData(activity, callback);
         } else {
             Nammu.askForPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     new PermissionCallback() {
                         @Override
                         public void permissionGranted() {
-                            startFetchingData(activity);
+                            startFetchingData(activity, callback);
                         }
 
                         @Override
@@ -93,8 +91,8 @@ public class MainPresenter implements ILifecycleListener {
         Nammu.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void startFetchingData(Context context) {
-        FeedManagerImpl.getInstance(context).fetch(feedPostsCallback);
+    private void startFetchingData(Context context, FeedDataKitManager.FeedPostsCallback callback) {
+        FeedManagerImpl.getInstance(context).fetch(callback);
         FeedManagerImpl.getInstance(context).startPeriodicTask(context);
     }
 

@@ -12,8 +12,6 @@ import com.feeddatakit.model.Post;
 import com.feedlibraryassignment.logic.FeedManagerImpl;
 import com.feedlibraryassignment.presenter.MainPresenter;
 
-import pl.tajchert.nammu.Nammu;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements FeedDataKitManage
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        lifecycleListener = new MainPresenter(this, this);
+        lifecycleListener = new MainPresenter(this);
         lifecycleListener.onCreate(this);
 
         setContentView(R.layout.activity_main);
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements FeedDataKitManage
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(() -> {
-            FeedManagerImpl.getInstance(getApplicationContext()).fetch(MainActivity.this);
+            FeedManagerImpl.getInstance(getApplicationContext()).fetch(this);
         });
 
         // Configure the refreshing colors
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements FeedDataKitManage
 
     public void onResume() {
         super.onResume();
-        lifecycleListener.onResume(this);
+        lifecycleListener.onResume(this, this);
     }
 
     @Override
