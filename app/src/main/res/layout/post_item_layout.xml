@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10.4dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+            app:actualImageScaleType="fitCenter"
+            android:layout_width="50.6dp"
+            android:layout_height="50.6dp"
+            android:id="@+id/user_image"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="9.9dp"
+            android:src="@android:drawable/ic_menu_add"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="@dimen/sender_image_margin_left"
+            />
+
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_toRightOf="@+id/user_image"
+            android:layout_marginLeft="@dimen/text_margin_left"
+            android:text="Sender name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/name"
+            />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/date_color"
+            android:layout_toRightOf="@+id/user_image"
+            android:layout_below="@id/name"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="@dimen/text_margin_left"
+            android:text="Dec 9 at 2:21p.m"
+            android:textSize="12sp"
+            android:id="@+id/date"
+            />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/user_image"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="@dimen/sender_image_margin_left"
+            android:textSize="16sp"
+            android:text="Message body"
+            android:id="@+id/text"
+            />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+            app:actualImageScaleType="fitCenter"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/image"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="9.9dp"
+            android:scaleType="centerInside"
+            android:layout_below="@+id/text"
+            android:layout_centerHorizontal="true"
+            />
+
+</RelativeLayout>

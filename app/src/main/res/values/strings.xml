@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FeedLibraryAssignment</string>
+    <string name="refused_permission_message">App won\'t work if you refused permissions.</string>
+</resources>
