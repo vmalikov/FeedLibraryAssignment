@@ -3,6 +3,7 @@ package com.feedlibraryassignment.view;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -70,6 +71,7 @@ public class PostItemView extends BasicItemView {
         if(!TextUtils.isEmpty(url)) {
             imageView.setVisibility(VISIBLE);
             imageView.setImageURI(Uri.parse(url));
+
         } else {
             imageView.setVisibility(GONE);
         }

@@ -17,6 +17,7 @@ import com.feedlibraryassignment.receiver.UpdateReceiver;
 import pl.tajchert.nammu.Nammu;
 import pl.tajchert.nammu.PermissionCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FeedDataKitManager.FeedPostsCallback,
@@ -100,27 +101,35 @@ public class MainActivity extends AppCompatActivity implements FeedDataKitManage
 
     @Override
     public void onPosts(List<Post> list) {
-        mAdapter.setItems(list);
-        swipeContainer.setRefreshing(false);
+        runOnUiThread(() -> {
+            mAdapter.setItems(list);
+            swipeContainer.setRefreshing(false);
+        });
     }
 
     @Override
     public void onError(Throwable e) {
-        e.printStackTrace();
-        swipeContainer.setRefreshing(false);
-        Toast.makeText(getApplicationContext(), "Got an error! ", Toast.LENGTH_SHORT).show();
+        runOnUiThread(() -> {
+            e.printStackTrace();
+            swipeContainer.setRefreshing(false);
+            Toast.makeText(getApplicationContext(), "Got an error! ", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
     public void onNewPost(List<Post> list) {
-        // filter if we have already loaded posts - don't need to add them
-        List<Post> existingPosts = mAdapter.getItems();
-        for (Post post : existingPosts) {
-            if (list.contains(post)) {
-                list.remove(post);
+        runOnUiThread(() -> {
+            // filter if we have already loaded posts - don't need to add them
+            List<Post> existingPosts = mAdapter.getItems();
+            List<Post> newPosts = new ArrayList<>(list);
+
+            for (Post post : existingPosts) {
+                if (newPosts.contains(post)) {
+                    newPosts.remove(post);
+                }
             }
-        }
-        mAdapter.addItemsToStart(list);
+            mAdapter.addItemsToStart(newPosts);
+        });
     }
 
     // Permissions section

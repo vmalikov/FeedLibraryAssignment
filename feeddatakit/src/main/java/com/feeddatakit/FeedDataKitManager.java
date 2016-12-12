@@ -2,6 +2,7 @@ package com.feeddatakit;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.util.Log;
 
 import com.feeddatakit.model.Post;
@@ -21,7 +22,7 @@ public abstract class FeedDataKitManager {
     FeedFileServerDataProvider networkProvider;
     FeedCachedDataProvider cacheProvider;
 
-    private Handler handler = new Handler();
+    private Handler handler;
 
     private long SECOND = 1000;
     private long period = SECOND * 3; // period for trying to fetch new posts
@@ -34,6 +35,10 @@ public abstract class FeedDataKitManager {
     protected FeedDataKitManager(Context context) {
         networkProvider = new FeedFileServerDataProvider();
         cacheProvider = new FeedCachedDataProvider(context);
+
+        HandlerThread thread = new HandlerThread("HandlerThread");
+        thread.start();
+        handler = new Handler(thread.getLooper());
     }
 
     public interface FeedPostsCallback {
@@ -49,7 +54,9 @@ public abstract class FeedDataKitManager {
      */
     public void fetch(FeedPostsCallback callback) {
         Log.i(TAG, "fetch: ");
-        fetchFromNetwork(callback);
+        handler.post(() -> {
+            fetchFromNetwork(callback);
+        });
     }
 
     private void fetchFromNetwork(final FeedPostsCallback callback) {
