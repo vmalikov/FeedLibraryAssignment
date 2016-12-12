@@ -15,8 +15,8 @@ import java.io.IOException;
 
 public class FeedFileServerDataProvider implements IFeedProvider {
 
-    private static final String DATA_FILE_NAME = "feed.txt";
-    private static final String DATA_FILE_NAME_2 = "feed_new.txt";
+    private static final String DATA_FILE_NAME = "posts.txt";
+    private static final String DATA_FILE_NAME_2 = "newposts.txt";
 
     @Override
     public void fetch(FeedDataKitManager.FeedPostsCallback callback) {
