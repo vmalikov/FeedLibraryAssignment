@@ -1,17 +1,13 @@
 package com.feeddatakit.provider;
 
-import android.content.Context;
 import android.os.Environment;
-import android.support.v4.content.AsyncTaskLoader;
 
 import com.feeddatakit.FeedDataKitManager;
-import com.feeddatakit.model.Post;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by mac on 12/11/16.
